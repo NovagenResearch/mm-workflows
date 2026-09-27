@@ -73,20 +73,20 @@
         "vs_demo_4",
         "run_diffdock",
         "openfold",
-       // Removing this test because it still tries to download from pdbbind,org.cn
+       // Removing these tests because they still try to download from pdbbind,org.cn
        // That orgnainzation no longer has the previous public URL (need a login)
        // the best solution would be to manually download the data
        // and ask their permission to use it in our CI (Self-hosted)
-       // And also removing it from "run_weekly" group
+       // And also removing them from "run_weekly" group
        "docking_rescoring",
-       "docking_rescoring_weekly"
+       "docking_rescoring_weekly",
+       "vs_demo_4_weekly",
+       "run_diffdock_weekly"
     ],
     // Run computationally intensive stress tests weekly.
     // e.g. these workflows should scatter over much larger input arrays.
     "run_weekly": [
         "vs_demo_2_weekly",
-        "vs_demo_3_weekly",
-        "vs_demo_4_weekly",
-        "run_diffdock_weekly"
+        "vs_demo_3_weekly"
     ]
 }
