@@ -28,7 +28,7 @@ inputs:
       - edam:format_3814
 
   top_n_confident:
-    type: float
+    type: int
     label: top n most confident poses to keep
     inputBinding:
       prefix: --top_n_confident
