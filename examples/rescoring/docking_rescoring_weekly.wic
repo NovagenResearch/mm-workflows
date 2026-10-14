@@ -11,4 +11,4 @@ wic:
               max_row: !ii 1000  # Default 500
           (2, random_subset_rows):
             in:
-              num_of_samples: !ii 32
+              num_of_samples: !ii 16
