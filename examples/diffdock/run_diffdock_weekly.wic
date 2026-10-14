@@ -6,6 +6,6 @@ wic:
     (1, run_diffdock.wic):
       wic:
         steps:
-          (1, extract_pdbbind_refined):
+          (1, download_binding_complexes):
             in:
               max_row: !ii 16 # Override default 1

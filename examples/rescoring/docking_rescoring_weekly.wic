@@ -6,7 +6,7 @@ wic:
     (1, docking_rescoring.wic):
       wic:
         steps:
-          (1, extract_pdbbind_refined):
+          (1, download_binding_complexes):
             in:
               max_row: !ii 1000  # Default 500
           (2, random_subset_rows):
