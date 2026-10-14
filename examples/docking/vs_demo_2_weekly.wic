@@ -8,8 +8,8 @@ wic:
         steps:
           (3, download_smiles_ligand_db.wic):
             in:
-              max_row: !ii 16 # Override default 1
+              max_row: !ii 4 # Override default 1
           (8, autodock_vina_filter):
             in:
               max_num_poses_per_ligand: !ii 2 # Override default 1
-              max_num_poses_total: !ii 16 # Override default 1
+              max_num_poses_total: !ii 4 # Override default 1
