@@ -69,17 +69,10 @@
         "cwl_subinterpreter_complex",
         "cwl_subinterpreter_ligand",
         "cwl_subinterpreter_protein",
-        // Skip vs_demo_4 and run_diffdock so we don't accidentally DOS pdbbind.org.cn
+        // vs_demo_4 and run_diffdock run weekly, as vs_demo_4_weekly and run_diffdock_weekly.
         "vs_demo_4",
         "run_diffdock",
-        "openfold",
-       // Removing this test because it still tries to download from pdbbind,org.cn
-       // That orgnainzation no longer has the previous public URL (need a login)
-       // the best solution would be to manually download the data
-       // and ask their permission to use it in our CI (Self-hosted)
-       // And also removing it from "run_weekly" group
-       "docking_rescoring",
-       "docking_rescoring_weekly"
+        "openfold"
     ],
     // Run computationally intensive stress tests weekly.
     // e.g. these workflows should scatter over much larger input arrays.
@@ -87,6 +80,7 @@
         "vs_demo_2_weekly",
         "vs_demo_3_weekly",
         "vs_demo_4_weekly",
+        "docking_rescoring_weekly",
         "run_diffdock_weekly"
     ]
 }

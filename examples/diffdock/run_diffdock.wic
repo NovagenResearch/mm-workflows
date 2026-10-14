@@ -1,6 +1,6 @@
 steps:
 
-  - id: extract_pdbbind_refined
+  - id: download_binding_complexes
     in:
       # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.query.html
       # "The query() method uses a slightly modified Python syntax by default.
@@ -82,10 +82,10 @@ wic:
     label: DiffDock
 
   steps:
-    (1, extract_pdbbind_refined):
+    (1, download_binding_complexes):
       wic:
         graphviz:
-          label: Extract PDBbind Data
+          label: Download Binding Complexes
     (2, fix_side_chain):
       wic:
         graphviz:

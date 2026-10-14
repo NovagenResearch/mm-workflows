@@ -1,13 +1,13 @@
 ## Protein-ligand docking and docking poses re-ranking
 ##
-## input: pdb structures from PDBbind refined dataset
+## input: protein-ligand complexes from the RCSB PDB
 ## output:
 ##    1. docking poses
 ##    2. scoring file (vina score, sfct correction, combined_score for re-ranking docking poses)
 
 steps:
 #
-- id: extract_pdbbind_refined
+- id: download_binding_complexes
   in:
     # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.query.html
     # "The query() method uses a slightly modified Python syntax by default.
@@ -112,10 +112,10 @@ wic:
   graphviz:
     label: Protein-ligand docking (Smina) and docking poses re-ranking (OnionNet-sfct)
   steps:
-    (1, extract_pdbbind_refined):
+    (1, download_binding_complexes):
       wic:
         graphviz:
-          label: extract protein-ligand structure (protein.pdb and ligand.sdf) from pdbbind_refined dataset
+          label: download protein-ligand structures (protein.pdb and ligand.sdf) from the RCSB PDB
     (2, random_subset_rows):
       wic:
         graphviz:

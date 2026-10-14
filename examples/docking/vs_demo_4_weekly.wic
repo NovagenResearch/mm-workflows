@@ -6,7 +6,7 @@ wic:
     (1, vs_demo_4.wic):
       wic:
         steps:
-          (1, extract_pdbbind_refined):
+          (1, download_binding_complexes):
             in:
               max_row: !ii 16 # Override default 1
           (9, autodock_vina_filter):
