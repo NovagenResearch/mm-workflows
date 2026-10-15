@@ -6,8 +6,3 @@ steps:
         dockerPull: !ii jakefennick/nmr4md
         input_tpr_path: !* prod.tpr
         input_trr_path: !* prod.trr
-
-# Do NOT run this in the CI, because it makes the CI go from ~30 mins to >6 hours due to:
-# "MDAnalysis/coordinates/XDR.py:202: UserWarning:
-# Cannot write lock/offset file in same location as
-# .../prod.trr. Using slow offset calculation."
