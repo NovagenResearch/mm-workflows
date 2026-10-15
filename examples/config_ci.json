@@ -12,9 +12,10 @@
         "vs_demo_4_weekly",
         "docking_rescoring_weekly"
     ],
-    // NOTE: Most of the workflows in this list have free variables because they are subworkflows
-    // i.e. if you try to run them, you will get "Missing required input parameter"
-    "run_blacklist": [
+    // Library workflows: each needs an input or an edge (!*) that only a parent workflow
+    // supplies, so none of them runs on its own. The cwl_subinterpreter_* workflows compile
+    // to no steps: they watch the files a parent's MD run writes.
+    "fragments": [
         "assign_partial_charges_batch",
         "convert_ligand_mol2_to_pdbqt_mdanalysis",
         "download_smiles_ligand_db",
@@ -48,15 +49,6 @@
         "equil",
         "setup",
         "steep",
-        // modeling called in tutorial
-        "modeling",
-        // Do NOT run nmr, because it makes the CI go from ~30 mins to >6 hours due to:
-        "nmr",
-        // "MDAnalysis/coordinates/XDR.py:202: UserWarning:
-        // Cannot write lock/offset file in same location as
-        // .../prod.trr. Using slow offset calculation."
-        // So let's un-blacklist tutorial
-        // "tutorial",  // called in nmr
         "prod",
         "flc",
         "npt",
@@ -64,23 +56,23 @@
         "min",
         "cg",
         "yank",
-        // These (currently) always return success, so no point in running them.
         "cwl_subinterpreter_analysis",
         "cwl_subinterpreter_complex",
         "cwl_subinterpreter_ligand",
-        "cwl_subinterpreter_protein",
-        // vs_demo_4 and run_diffdock run weekly, as vs_demo_4_weekly and run_diffdock_weekly.
-        "vs_demo_4",
-        "run_diffdock",
-        "openfold"
+        "cwl_subinterpreter_protein"
     ],
-    // Run computationally intensive stress tests weekly.
-    // e.g. these workflows should scatter over much larger input arrays.
-    "run_weekly": [
+    // Run Workflows skips these on every push; Run Workflows Weekly runs all of them.
+    "intensive": [
+        // The *_weekly workflows scatter over more inputs than the workflows they are named after.
         "vs_demo_2_weekly",
         "vs_demo_3_weekly",
         "vs_demo_4_weekly",
         "docking_rescoring_weekly",
-        "run_diffdock_weekly"
+        "run_diffdock_weekly",
+        // vs_demo_4 and run_diffdock are the only step of their *_weekly workflows, which take
+        // about 40 and 12 minutes; nmr runs tutorial's MD again before its analysis.
+        "vs_demo_4",
+        "run_diffdock",
+        "nmr"
     ]
 }
