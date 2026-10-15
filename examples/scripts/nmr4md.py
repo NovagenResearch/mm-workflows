@@ -19,7 +19,10 @@ def main(input_tpr_path: str, input_trr_path: str, output_png_path: str) -> None
 
     u = mda.Universe(input_tpr_path, input_trr_path)
     group_H = u.select_atoms("type H*")
-    nmr_result = nmrformd.NMR(u, group_H)
+    # number_i=40 samples 40 of these hydrogens, as nmrformd's tutorial does
+    # (docs/source/tutorials/isotropic-system.rst): the cost grows with the square of
+    # the hydrogens used, and all of them (about 26,000 here) take hours.
+    nmr_result = nmrformd.NMR(u, group_H, number_i=40)
 
     fontsize = 20
     font = {'color':  'black', 'weight': 'normal', 'size': fontsize}
