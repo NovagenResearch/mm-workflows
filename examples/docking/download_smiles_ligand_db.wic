@@ -18,7 +18,7 @@ outputs:
   output_txt_path:
     type: File
     format: edam:format_2330
-    outputSource: download_smiles_ligand_db__step__2__generate_conformers/output_txt_path
+    outputSource: generate_conformers/output_txt_path
 
 steps:
   wget_xlsx:
