@@ -39,8 +39,7 @@ def make_ipytree_nodes(prov_tree: Dict, rootdir: str) -> List[Node]:
             children = []
             dests = set()
             for (location, namespaced_output_name, basename) in val:
-                yaml_stem_init, shortened = utils.shorten_namespaced_output_name(namespaced_output_name)
-                parentdirs = yaml_stem_init + '/' + shortened.replace('___', '/')
+                parentdirs = namespaced_output_name.replace('~', '/')
                 dest = rootdir + 'outdir/' + parentdirs + '/' + basename
                 idx = 2
                 while dest in dests:
@@ -60,10 +59,6 @@ def make_ipytree_nodes(prov_tree: Dict, rootdir: str) -> List[Node]:
                 # attribute exists and use it anyway. Is this unsafe? Probably!
                 child.id = parentdirs
                 children.append(child)
-        # NOTE: See utils.shorten_namespaced_output_name()
-        if len(key.split('__')) == 4:  # i.e. if key is a namespace, not an output_name
-            (_, i, step_key) = utils.parse_step_name_str(key)
-            key = f'step {i+1} {step_key}'
         node = Node(key, children)
         node.id = ''  # See above comment.
         node.opened = False

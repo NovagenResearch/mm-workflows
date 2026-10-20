@@ -4,62 +4,6 @@ from typing import Dict, List, Tuple, Any
 Json = Dict[str, Any]
 
 
-def parse_step_name_str(step_name: str) -> Tuple[str, int, str]:
-    """The inverse function to step_name_str()
-
-    Args:
-        step_name (str): A string of the same form as returned by step_name_str()
-
-    Raises:
-        Exception: If the argument is not of the same form as returned by step_name_str()
-
-    Returns:
-        Tuple[str, int, str]: The parameters used to create step_name
-    """
-    vals = step_name.split('__')  # double underscore
-    if not len(vals) == 4:
-        raise Exception(f"Error! {step_name} is not of the format \n"
-                        + '{yaml_stem}__step__{i+1}__{step_key}\n'
-                        + 'yaml_stem and step_key should not contain any double underscores.')
-    try:
-        i = int(vals[2])
-    except Exception as ex:
-        raise Exception(f"Error! {step_name} is not of the format \n"
-                        + '{yaml_stem}__step__{i+1}__{step_key}') from ex
-    return (vals[0], i-1, vals[3])
-
-
-# Copied from wic to avoid wic dependency
-def shorten_namespaced_output_name(namespaced_output_name: str, sep: str = ' ') -> Tuple[str, str]:
-    """Removes the intentionally redundant yaml_stem prefixes from the list of
-    step_name_str's embedded in namespaced_output_name which allows each
-    step_name_str to be context-free and unique. This is potentially dangerous,
-    and the only purpose is so we can slightly shorten the output filenames.
-
-    Args:
-        namespaced_output_name (str): A string of the form:
-        '___'.join(namespaces + [step_name_i, out_key])
-        sep (str): The separator used to construct the shortened step name strings.
-
-    Returns:
-        Tuple[str, str]: the first yaml_stem, so this function can be inverted,
-        and namespaced_output_name, with the embedded yaml_stem prefixes
-        removed and double underscores replaced with a single space.
-    """
-    split = namespaced_output_name.split('___')
-    namespaces = split[:-1]
-    output_name = split[-1]
-    strs = []
-    yaml_stem_init = ''
-    if len(namespaces) > 0:
-        yaml_stem_init = parse_step_name_str(namespaces[0])[0]
-        for stepnamestr in namespaces:
-            _, i, step_key = parse_step_name_str(stepnamestr)
-            strs.append(f'step{sep}{i+1}{sep}{step_key}')
-    shortened = '___'.join(strs + [output_name])
-    return (yaml_stem_init, shortened)
-
-
 def recursively_insert_into_dict_tree(tree: Dict, keys: List[str], val: Any) -> Dict:
     """Recursively inserts a value into a nested tree of Dicts, creating new Dicts as necessary.
 
@@ -143,7 +87,7 @@ def provenance_list_to_tree(files: List[Tuple[str, str, str]]) -> Dict:
     """
     tree: Dict = {}
     for location, namespaced_output_name, basename in files:
-        namespaces = namespaced_output_name.split('___')
+        namespaces = namespaced_output_name.split('~')
         # print(yaml.dump(tree))
         # print((location, namespaced_output_name, basename))
         tree = recursively_insert_into_dict_tree(tree, namespaces, (location, namespaced_output_name, basename))
