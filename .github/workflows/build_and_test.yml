@@ -55,25 +55,25 @@ jobs:
 
       - name: Setup mamba (linux, macos)
         if: runner.os != 'Windows'
-        uses: conda-incubator/setup-miniconda@v3.0.1
+        uses: conda-incubator/setup-miniconda@v4.0.1
         with:
-          miniforge-variant: Miniforge-pypy3
-          miniforge-version: latest
+          miniforge-variant: Miniforge3
+          miniforge-version: 24.7.1-2
           environment-file: mm-workflows/install/system_deps.yml
           activate-environment: mm
           channels: conda-forge
-          python-version: "3.9.*" # pypy is not yet compatible with 3.10 and 3.11
+          python-version: "3.11.*"
 
       - name: Setup mamba (windows)
         if: runner.os == 'Windows'
-        uses: conda-incubator/setup-miniconda@v3.0.1
+        uses: conda-incubator/setup-miniconda@v4.0.1
         with:
-          miniforge-variant: Miniforge-pypy3
-          miniforge-version: latest
+          miniforge-variant: Miniforge3
+          miniforge-version: 24.7.1-2
           environment-file: mm-workflows/install/system_deps_windows.yml
           activate-environment: mm
           channels: conda-forge
-          python-version: "3.9.*" # pypy is not yet compatible with 3.10 and 3.11
+          python-version: "3.11.*"
 
       - name: ShellCheck Script Quality
         if: always()

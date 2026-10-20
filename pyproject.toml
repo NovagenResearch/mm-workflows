@@ -150,6 +150,13 @@ ignore_errors = false
 module = ["BioSimSpace.*", "MDAnalysis.*", "pymol.*", "rdkit.*", "nmrformd.*", "setuptools.*", "parmed.*", "pdbfixer.*", "openmm.*", "mdtraj.*", "nglview.*", "ipytree.*", "ipywidgets.*"]
 ignore_missing_imports = true
 
+# rdkit ships its own stubs, which are incomplete (no AllChem functions) and on some builds
+# do not parse. Read rdkit as untyped, as before it shipped them.
+[[tool.mypy.overrides]]
+module = ["rdkit.*"]
+follow_imports = "skip"
+follow_imports_for_stubs = true
+
 
 [tool.pytest.ini_options]
 markers = [
