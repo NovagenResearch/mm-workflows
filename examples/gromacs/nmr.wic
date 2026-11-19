@@ -1,8 +1,7 @@
 steps:
     tutorial.wic:
-    python_script:
+    nmr4md:
       in:
         script: !ii ../scripts/nmr4md.py
-        dockerPull: !ii jakefennick/nmr4md
         input_tpr_path: !* prod.tpr
         input_trr_path: !* prod.trr
