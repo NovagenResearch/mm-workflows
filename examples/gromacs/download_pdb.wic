@@ -42,10 +42,9 @@ steps:
         models: [1]
     # out:
     # - output_structure_path: !& protein.pdb
-  python_script:
+  atomselect:
     in:
       script: !ii ../scripts/atomselect.py
-      dockerPull: !ii jakefennick/atomselect
       # Remove any unknown residues that weren't already 'cleaned' in the `pdb` step above.
       selection_string: !ii not resname UNK
     out:
@@ -67,7 +66,7 @@ wic:
       wic:
         graphviz:
           label: 'Extract First Model'
-    (4, python_script):
+    (4, atomselect):
       wic:
         graphviz:
           label: 'Remove Unknown Residues'

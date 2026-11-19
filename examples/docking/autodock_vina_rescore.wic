@@ -7,10 +7,9 @@ inputs:
     format: edam:format_1476
 
 steps:
-- id: python_script
+- id: atomselect
   in:
     script: !ii ../scripts/atomselect.py
-    dockerPull: !ii jakefennick/atomselect
     selection_string: !ii protein # Extract the protein from the last timestep
     input_pdb_path: input_pdb_path # !* prod.pdb
 # Assign partial charges (protein)
@@ -22,10 +21,9 @@ steps:
     arg1: !ii -xr # Receptor needs to be rigid
   out:
   - output_pdb_path: !& protein_prod.pdbqt
-- id: python_script
+- id: atomselect
   in:
     script: !ii ../scripts/atomselect.py
-    dockerPull: !ii jakefennick/atomselect
     selection_string: !ii resname MOL # Extract the ligand from the last timestep
     input_pdb_path: input_pdb_path # !* prod.pdb
   # out:
@@ -61,7 +59,7 @@ wic:
   graphviz:
     label: Re-score Refined\nDocking Poses
   steps:
-    (1, python_script):
+    (1, atomselect):
       wic:
         graphviz:
           label: Select Protein\nfrom last timestep
@@ -73,7 +71,7 @@ wic:
       wic:
         graphviz:
           label: Convert to\npdbqt format
-    (4, python_script):
+    (4, atomselect):
       wic:
         graphviz:
           label: Select Ligand\nfrom last timestep
